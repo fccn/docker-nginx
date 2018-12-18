@@ -98,10 +98,11 @@ services:
       - ./certs:/opt/nginx/ssl
       - ./webcontent:/var/www
 
-#-- other companion services
+#-- other services
 
 ```
 
+In the example above the site configurations are defined in **sites-enabled** folder, the ssl certificates are located in the **certs** folder and the html static content at the **webcontent** folder.
 
 ## Author
 
