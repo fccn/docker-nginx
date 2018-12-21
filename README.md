@@ -44,7 +44,7 @@ make help
 To correctly use this image as a Nginx web server the following is required:
 
 - You can use this image directly to serve static html content.
-- You need to define the site configuration on the sites-enabled folder located under **$NGINX_OPTS/sites-enabled**, check *test/data/sites-enabled* for examples.
+- You need to define the site configuration on the sites-enabled folder located under **$NGINX_OPTS/sites-enabled**, check *test/config/sites-enabled* for examples.
 - Import the html content to the root folder defined in the site settings.
 - The container entrypoint script needs to be executed by root. The entrypoint script starts and monitors the required processes for the webserver.
 
