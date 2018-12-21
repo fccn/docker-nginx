@@ -3,7 +3,7 @@
 A docker image based on Alpine for Nginx with configuration support for reverse proxy and simplesamlphp.
 The following additional settings are used:
 
-- Nginx major configurations moved to $NGINX_OPTS folder (defaults to /opt/nginx)
+- Nginx configurations on $NGINX_OPTS folder (defaults to /opt/nginx)
 for easier overrides
 - Location of NGINX_OPTS and NGINX_ROOT folders can be set as build argument
 - Clean sites-enabled folder on $NGINX_OPTS/sites-enabled
@@ -81,7 +81,7 @@ USER root
 
 Use the following sample compose file to start this container in docker-compose:
 
-```
+```yaml
 version: '3.4'
 services:
 
@@ -93,15 +93,16 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./sites-enabled:/opt/nginx/sites-enabled
-      - ./certs:/opt/nginx/ssl
-      - ./webcontent:/var/www
+      - ./sites-enabled:/opt/nginx/sites-enabled   # site configurations
+      - ./conf.d:/opt/nginx/conf.d                 # additional nginx configs
+      - ./certs:/opt/nginx/ssl                     # ssl certificates
+      - ./webcontent:/var/www                      # html static content
 
 #-- other services
 
 ```
 
-In the example above the site configurations are defined in **sites-enabled** folder, the ssl certificates are located in the **certs** folder and the html static content at the **webcontent** folder.
+In the example above the site configurations are defined in **sites-enabled** folder, additional nginx configurations can be set on the **conf.d** folder, the ssl certificates are located in the **certs** folder and the html static content at the **webcontent** folder.
 
 ## Author
 
