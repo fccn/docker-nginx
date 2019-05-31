@@ -29,10 +29,6 @@ steps:
     docker run -t $(image.name) nginx -v
   displayName: 'validate the image'
 - script: |
-    docker run --rm --name "nginx_proxy"  -v $(PWD)/test/config/sites-enabled:$(nginx_opts)/sites-enabled -v $(PWD)/test/certs:/etc/nginx/ssl -v $(PWD)/test/webcontent:$(web_document_root) -p $(test_http_port):80 -p $(test_https_port):443 $(image.name)
-    wget --quiet -S --spider http://localhost || exit 1
-  displayName: 'test the image'
-- script: |
     docker login -u $(dockerId) -p $(dockerPassword)
     docker tag $(image.name) $(dockerRepoId)/$(image.tagversion)
     docker tag $(image.name)$(dockerRepoId)/$(image.basename):$(image.version.major).$(image.version.minor)
