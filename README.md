@@ -11,7 +11,7 @@ for easier overrides
 - Clean sites-enabled folder on $NGINX_OPTS/sites-enabled
 - Local copy of [H5bp]() configurations at $NGINX_ROOT/h5bp
 - Customized init script that starts and monitors the required processes for the webserver
-- Using Nginx v1.15.7
+- Using Nginx v1.15.12
 - Alpine 3.8
 
 ## Requirements
