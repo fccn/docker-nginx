@@ -1,0 +1,2 @@
+# Load additional configuration files from the optional conf.d directory.
+include ${NGINX_OPTS}/conf.d/*.conf;
