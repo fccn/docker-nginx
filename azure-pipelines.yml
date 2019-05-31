@@ -1,0 +1,43 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+variables:
+  image.version.major: '1'
+  image.version.minor: '0'
+  image.version: '$(image.version.major).$(image.version.minor).1'
+  image.basename: 'nginx_proxy'
+  image.name: '$(image.basename):$(build.buildId)'
+  image.tagversion: '$(image.basename):$(image.version)'
+  image.taglatest: '$(image.basename):latest'
+  nginx_opts: '/opt/nginx'
+  web_document_root: '/var/www'
+  test_http_port: 10080
+  test_https_port: 10443
+
+steps:
+- script: docker build -f Dockerfile -t $(image.name) .
+  displayName: 'build image'
+- script: |
+    docker run -t $(image.name) nginx --version
+  displayName: 'validate the image'
+- script: |
+    docker run --rm --name "nginx_proxy"  -v $(PWD)/test/config/sites-enabled:$(nginx_opts)/sites-enabled -v $(PWD)/test/certs:/etc/nginx/ssl -v $(PWD)/test/webcontent:$(web_document_root) -p $(test_http_port):80 -p $(test_https_port):443 $(image.name)
+  displayName: 'test the image'
+- script: |
+    docker login -u $(dockerId) -p $(dockerPassword)
+    docker tag $(image.name) $(dockerRepoId)/$(image.tagversion)
+    docker tag $(image.name)$(dockerRepoId)/$(image.basename):$(image.version.major).$(image.version.minor)
+    docker tag $(image.name) $(dockerRepoId)/$(image.taglatest)
+    docker push $(dockerRepoId)/$(image.tagversion)
+    docker push $(dockerRepoId)/$(image.basename):$(image.version.major).$(image.version.minor)
+    docker push $(dockerRepoId)/$(image.taglatest)
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  displayName: 'push image to dockerhub'
