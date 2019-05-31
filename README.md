@@ -1,5 +1,7 @@
 # Docker image for a generic Nginx web application server
 
+[![Build Status](https://dev.azure.com/pcosta-fccn/Docker%20base%20images/_apis/build/status/fccn.docker-nginx?branchName=master)](https://dev.azure.com/pcosta-fccn/Docker%20base%20images/_build/latest?definitionId=6&branchName=master)
+
 A docker image based on Alpine for Nginx with configuration support for reverse proxy and simplesamlphp.
 The following additional settings are used:
 
@@ -10,6 +12,7 @@ for easier overrides
 - Local copy of [H5bp]() configurations at $NGINX_ROOT/h5bp
 - Customized init script that starts and monitors the required processes for the webserver
 - Using Nginx v1.15.7
+- Alpine 3.8
 
 ## Requirements
 
