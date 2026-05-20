@@ -5,7 +5,7 @@
 # - additional configs for simplesamlphp
 # - nginx runs as application user
 #----------------------------------------------------------
-FROM nginx:mainline-alpine
+FROM nginx:mainline-alpine3.23
 LABEL maintainer="Paulo Costa <paulo.costa@fccn.pt>"
 
 #---- Read build args
